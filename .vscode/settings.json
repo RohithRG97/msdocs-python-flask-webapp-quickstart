@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/ba3fe849-fee5-409d-aa19-1c47c2ec6b27/AppServices/subscriptions/ba3fe849-fee5-409d-aa19-1c47c2ec6b27/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/rohithnewdemo",
+    "appService.deploySubpath": "."
+}

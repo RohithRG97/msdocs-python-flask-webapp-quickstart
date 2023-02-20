@@ -1,29 +1,25 @@
-from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request
+import pypyodbc as odbc
+import pandas as pd
+
 app = Flask(__name__)
+#app.config['SQLALCHEMY_DATABASE_URI'}
+
+# Server Connection 
+server = 'cloudsqlserver01.database.windows.net'
+database = 'DemoDB'
+connection_string = 'Driver={ODBC Driver 18 for SQL Server};Server=tcp:cloudsqlserver01.database.windows.net,1433;Database=DemoDB;Uid=RohithGurram;Pwd={Demodbgrr@#4};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
+conn = odbc.connect(connection_string)
 
 
 @app.route('/')
-def index():
-   print('Request for index page received')
-   return render_template('index.html')
+def earthquakedata():
+    cur = conn.cursor()
+    resultValue = cur.execute("SELECT * FROM dbo.bonusquiztb")
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    #if resultValue > 0:
+    data = cur.fetchall()
+    return render_template('earthquakesdata.html', data=data)
 
-@app.route('/hello', methods=['POST'])
-def hello():
-   name = request.form.get('name')
-
-   if name:
-       print('Request for hello page received with name=%s' % name)
-       return render_template('hello.html', name = name)
-   else:
-       print('Request for hello page received with no name or blank name -- redirecting')
-       return redirect(url_for('index'))
-
-
-if __name__ == '__main__':
-   app.run()
+if __name__ == "__main__":
+    app.run(debug=True)
