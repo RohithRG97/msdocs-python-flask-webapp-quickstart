@@ -19,7 +19,7 @@ def earthquakedata():
 
     #if resultValue > 0:
     data = cur.fetchall()
-    return render_template('earthquakesdata.html', data=data)
+    return render_template('earthquakes.html', data=data)
 
 if __name__ == "__main__":
     app.run(debug=True)
